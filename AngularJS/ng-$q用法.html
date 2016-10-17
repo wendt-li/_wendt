@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../lib/angular.min.js" ></script>
+	</head>
+
+	<body ng-controller="myAppCtrl">
+
+		<script>
+			var myAppModule = angular.module("myApp", []);
+
+			myAppModule.controller("myAppCtrl", ["$scope", '$q', '$http', function($scope, $q, $http) {
+
+				function asyncGreet(url) {
+					var deferred = $q.defer();
+
+					$http({
+						method: 'GET',
+						url: url
+					}).
+					success(function(data, status, headers, config) {
+						deferred.resolve(data);
+					}).
+					error(function(data, status, headers, config) {
+						deferred.reject(data);
+					});
+
+					return deferred.promise;
+				}
+
+				var promise = asyncGreet('../localData/map.json');
+				promise.then(function(greeting) {
+					console.info('Success: ', greeting);
+				}, function(reason) {
+					console.info('Failed: ', reason);
+				});
+			}]);
+		</script>
+	</body>
+
+</html>

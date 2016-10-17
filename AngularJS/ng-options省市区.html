@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>angularjs select 三级联动</title>
+		<script type="text/javascript" src="../lib/angular.min.js"></script>
+		<style type="text/css">
+			label {
+				padding: 5px 10px;
+				border: 1px solid #fff;
+			}
+			
+			.error {
+				border-color: #f00;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div ng-controller='cityCtrl'>
+			<label ng-class="{error: error.province}">
+		        省份：
+		        <select ng-model="selected" ng-options="s.catname for s in list" ng-change="c()" >
+		            <option value="">--请选择--</option>
+		        </select>
+		    </label>
+			<label ng-show="selected.city.length" ng-class="{error: error.city}">
+		        市/区：
+		        <select ng-model="selected2" ng-options="sh.catname for sh in selected.city" ng-change="c2()" >
+		             <option value="">--请选择--</option>
+		        </select>
+		    </label>
+			<label ng-show="selected2.areas.length" ng-class="{error: error.area}">
+	        	县级/区域：
+		        <select ng-model="selected3" ng-options="x.catname for x in selected2.areas" ng-change="c3()" >
+		             <option value="">--请选择--</option>
+		        </select>
+    		</label>
+			<input type="submit" value="subimt" ng-click="submit()" />
+			<br /> {{selected.catname}} {{selected2.catname}} {{selected3.catname}}
+
+		</div>
+
+		<script type="text/javascript">
+			var app = angular.module('app', []);
+			app.controller('cityCtrl', ['$scope', '$http', function($scope, $http) {
+				$scope.error = {};
+				$scope.list = [];
+				$http.get('../localData/map.json').success(function(data) {
+					$scope.list = data;
+					console.info(data)
+				});
+
+				$scope.c = function() {
+					$scope.error.province = false;
+					$scope.error.city = false;
+					$scope.error.area = false;
+					$scope.selected2 = "";
+					$scope.selected3 = "";
+				};
+
+				$scope.c2 = function() {
+					$scope.error.city = false;
+					$scope.error.area = false;
+					$scope.selected3 = "";
+				};
+
+				$scope.c3 = function() {
+					$scope.error.area = false;
+				};
+
+				$scope.submit = function() {
+					$scope.error.province = $scope.selected ? false : true;
+					$scope.error.city = $scope.selected2 ? false : true;
+					$scope.error.area = $scope.selected3 ? false : true;
+				};
+
+			}]);
+
+			angular.bootstrap(document, ['app']);
+		</script>
+
+	</body>
+
+</html>

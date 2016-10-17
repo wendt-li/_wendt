@@ -1,0 +1,44 @@
+<html>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="../lib/angular.min.js"></script>
+
+	<body id="body">
+		<div ng-controller="myCtrl">
+			<div id="box">
+				<p ng-repeat="item in data" repeat-finish>{{item.str}}</p>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var app = angular.module("bootstrapTest", []);
+
+			app.controller("myCtrl", myCtrl);
+			var myCtrl = function($scope) {
+				//要循环的数据
+				$scope.data = [{
+					str: 'a'
+				}, {
+					str: 'b'
+				}, {
+					str: 'c'
+				}];
+			};
+
+			//自定义指令repeatFinish
+			app.directive('repeatFinish', function() {
+				return {
+					link: function(scope, element, attr) {
+						console.log(scope.$index)
+						if(scope.$last == true) {
+							console.log('ng-repeat执行完毕')
+						}
+					}
+				}
+			});
+
+			myCtrl.$injector = ['$scope'];
+
+			angular.bootstrap(document.getElementById("body"), ['bootstrapTest']);
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,65 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../lib/angular.min.js" ></script>
+</head>
+<body ng-app="myApp">
+    <div ng-controller="myCtrl" id="test">
+        {{ isArray }} <br><br>
+        {{ isDate }} <br><br>
+        {{ isUnDefined }} <br>
+        {{ isDefined }} <br><br>
+        {{ DocumentisElement }} <br>
+        {{ DivisElement }} <br><br>
+        {{ isFunction }} <br><br><br>
+        {{ isNumber1 }} <br>
+        {{ isNumber2 }} <br>
+        {{ isNumber3 }} <br>
+        {{ isNumber4 }} <br><br>
+        {{ isObject1 }} <br>
+        {{ isObject2 }} <br>
+        {{ isObject3 }} <br>
+        {{ isObject4 }} <br><br>
+        {{ isString1 }} <br>
+        {{ isString2 }} <br>
+        {{ isString3 }} <br>
+        {{ isString4 }} <br><br>
+    </div>
+   <script type="text/javascript">
+	var app = angular.module("myApp", []);
+	app.controller("myCtrl", function($scope) {
+
+		var arr = ["1", "2", "3"];
+		$scope.isArray = angular.isArray(arr); //true
+
+		var date = new Date();
+		$scope.isDate = angular.isDate(date); //true
+
+		var UnDefined;
+		$scope.isUnDefined = angular.isUndefined(UnDefined); //true
+		var Defined = "";
+		$scope.isDefined = angular.isDefined(Defined); //true
+
+		$scope.DocumentisElement = angular.isElement(document); //true
+		$scope.DivisElement = angular.isElement(document.getElementById("test")); //true
+
+		$scope.isFunction = angular.isFunction(function() {}); //true
+
+		$scope.isNumber1 = angular.isNumber(4); //true
+		$scope.isNumber2 = angular.isNumber(4.3); //true
+		$scope.isNumber3 = angular.isNumber(10 / 0); //true
+		$scope.isNumber4 = angular.isNumber(null); //false
+
+		$scope.isObject1 = angular.isObject(null); //false
+		$scope.isObject2 = angular.isObject(undefined); //false
+		$scope.isObject3 = angular.isObject(function() {}); //false
+		$scope.isObject4 = angular.isObject(date); //true
+
+		$scope.isString1 = angular.isString("value"); //true
+		$scope.isString2 = angular.isString('fds'); //true
+		$scope.isString3 = angular.isString(null); //false
+		$scope.isString4 = angular.isString(4); //false
+	});
+</script>
+</body>
+</html>
