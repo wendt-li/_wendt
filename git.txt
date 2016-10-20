@@ -1,12 +1,20 @@
-
+// 设置帐号信息
 $ git config --global user.name "Your Name"
 $ git config --global user.email "email@example.com"
+
+// 
+$ ssh-keygen -t rsa -C "youremail@example.com"  // C:\Users\Administrator\.ssh
 
 $ mkdir learngit  //创建目录
 $ cd learngit  //cd	  
 $ pwd  //查看当前目录
 
 $ git init  // 命令把这个目录变成Git可以管理的仓库
+
+
+$ git remote add origin git@github.com:wendt-li/gitApi.git  // 在github创建项目后，
+$ git push -u origin master  // 第一次提交，之后git push origin master推送最新修改
+
 
 $ git add readme.txt  //添加
 $ git commit -m "add distributed"  //提交	
@@ -36,9 +44,6 @@ $ git rm -r --cached "bulid"  //最终执行命令.
 $ git commit -m"移除src目录下所有文件的版本控制"  //提交
 $ git push origin master  //提交到远程服务器
 
-$ ssh-keygen -t rsa -C "youremail@example.com"  // C:\Users\Administrator\.ssh
-$ git remote add origin git@github.com:wendt-li/gitApi.git  // 在github创建项目后，
-$ git push -u origin master  // 第一次提交，之后git push origin master推送最新修改
 
 $ git clone git@github.com:michaelliao/gitskills.git  // 克隆项目
 
